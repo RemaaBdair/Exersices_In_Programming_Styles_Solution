@@ -3,13 +3,13 @@ let data = [];
 data[10] = [];
 data[0] = fs.readFileSync("stop_words.txt", "utf8").split(","); //stop words in data[0]
 
-/*//open new file
+//open new file
 let input = fs.open("word_freqs.txt", "w", (err: Error) => {
   if (err) {
     throw err;
   }
 });
-*/
+
 //open input file and read from it
 const lineReader = require("line-reader");
 lineReader.eachLine("input_words.txt", function(line: string, last: boolean) {
