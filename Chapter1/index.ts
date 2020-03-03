@@ -59,7 +59,6 @@ lineReader.eachLine("input_words.txt", function(line: string, last: boolean) {
 
   if (last) {
     for (data[8] = 0; data[8] < data[10].length; data[8]++) {
-      console.log("File is created!");
       fs.appendFile("word_freqs.txt", `${data[10][data[8]]} \n`, function(
         err: Error
       ) {
