@@ -1,6 +1,9 @@
 const fs = require("fs");
 const wrap = v => () => v;
+
 const bind = (v, func) => func(v());
+const fBind = (v, func) => wrap(bind(v, func));
+
 function readFile(filePath: string): string {
   return fs.readFileSync(filePath, "utf8");
 }
@@ -29,10 +32,18 @@ function calculateFreq(data: string[]): Record<string, number> {
   });
   return freqCount;
 }
-function sortArray(data: any[]): any[] {
-  return data.sort((a: any[], b: any[]) => {
-    return Number(b[1]) - Number(a[1]);
+function sortArray(data: {}): Record<string, number> {
+  let items = Object.keys(data).map(function(key) {
+    return [key, data[key]];
   });
+  items.sort(function(first, second) {
+    return second[1] - first[1];
+  });
+  let sorted_obj: Record<string, number> = {};
+  items.forEach(w => {
+    sorted_obj[w[0]] = w[1];
+  });
+  return sorted_obj;
 }
 
 console.log(
