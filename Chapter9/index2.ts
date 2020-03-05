@@ -1,8 +1,6 @@
 const fs = require("fs");
-const wrap =(v)=> v;
-
-const bind =(v, func)=> func(v);
-
+const wrap = v => () => v;
+const bind = (v, func) => func(v());
 function readFile(filePath: string): string {
   return fs.readFileSync(filePath, "utf8");
 }
@@ -20,14 +18,14 @@ function removeStopWords(data: string[]): string[] {
     return stopWords.indexOf(word) == -1 && word.length != 0;
   });
 }
-function calculateFreq(data: string[]):  Record<string,number>{
-  let freqCount: Record<string,number> = {};
-  data.forEach(word=>{
-      if(freqCount[word]){
+function calculateFreq(data: string[]): Record<string, number> {
+  let freqCount: Record<string, number> = {};
+  data.forEach(word => {
+    if (freqCount[word]) {
       freqCount[word]++;
-       } else{
-          freqCount[word]=1;
-      }
+    } else {
+      freqCount[word] = 1;
+    }
   });
   return freqCount;
 }
@@ -37,6 +35,28 @@ function sortArray(data: any[]): any[] {
   });
 }
 
-;
-console.log(wrap(bind(wrap(bind(wrap(bind(wrap(bind(wrap(bind(wrap(bind(wrap("input_words.txt"),readFile)),filter)),splitWords)),removeStopWords)),calculateFreq)),sortArray)))
-
+console.log(
+  wrap(
+    bind(
+      wrap(
+        bind(
+          wrap(
+            bind(
+              wrap(
+                bind(
+                  wrap(
+                    bind(wrap(bind(wrap("input_words.txt"), readFile)), filter)
+                  ),
+                  splitWords
+                )
+              ),
+              removeStopWords
+            )
+          ),
+          calculateFreq
+        )
+      ),
+      sortArray
+    )
+  )
+);
