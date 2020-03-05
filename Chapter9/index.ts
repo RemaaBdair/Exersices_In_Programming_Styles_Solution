@@ -29,19 +29,14 @@ function removeStopWords(data: string[]): string[] {
     return stopWords.indexOf(word) == -1 && word.length != 0;
   });
 }
-function calculateFreq(data: string[]): any[] {
-  let found: boolean;
-  let freqCount: any[] = [];
-
-  data.map(word => {
-    found = false;
-    freqCount.map(w => {
-      if (word === w[0]) {
-        w[1]++;
-        found = true;
+function calculateFreq(data: string[]):  Record<string,number>{
+  let freqCount: Record<string,number> = {};
+  data.forEach(word=>{
+      if(freqCount[word]){
+      freqCount[word]++;
+       } else{
+          freqCount[word]=1;
       }
-    });
-    if (!found) freqCount.push([word, 1]);
   });
   return freqCount;
 }
