@@ -1,9 +1,7 @@
 const fs = require("fs");
 const wrap = v => () => v;
-
 const bind = (v, func) => func(v());
 const fBind = (v, func) => wrap(bind(v, func));
-
 function readFile(filePath: string): string {
   return fs.readFileSync(filePath, "utf8");
 }
@@ -46,28 +44,13 @@ function sortArray(data: {}): Record<string, number> {
   return sorted_obj;
 }
 
-console.log(
-  wrap(
-    bind(
-      wrap(
-        bind(
-          wrap(
-            bind(
-              wrap(
-                bind(
-                  wrap(
-                    bind(wrap(bind(wrap("input_words.txt"), readFile)), filter)
-                  ),
-                  splitWords
-                )
-              ),
-              removeStopWords
-            )
-          ),
-          calculateFreq
-        )
-      ),
-      sortArray
-    )
-  )
-);
+const compose = (...fns) => arg => fns.reduce(fBind, arg);
+const wrappedValue = compose(
+  readFile,
+  filter,
+  splitWords,
+  removeStopWords,
+  calculateFreq,
+  sortArray
+)(wrap("input_words.txt"));
+console.log(wrappedValue);
