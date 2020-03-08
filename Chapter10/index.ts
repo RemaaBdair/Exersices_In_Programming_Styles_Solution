@@ -1,7 +1,13 @@
 const fs = require("fs");
-class DataStorageManager {
+class Things{
+    info(){
+        console.log(this.constructor.name)
+    }
+}
+class DataStorageManager extends Things{
   data: string;
   constructor(path: string) {
+    super()
     this.data = fs
       .readFileSync(path, "utf8")
       .replace(/[^a-zA-Z]/g, " ")
@@ -10,19 +16,27 @@ class DataStorageManager {
   words() {
     return this.data.split(" ");
   }
+  info(){
+    console.log(this.constructor.name)
 }
-class StopWordsManager {
+}
+class StopWordsManager extends Things {
   stopWords: string[];
   constructor() {
+    super()
     this.stopWords = fs.readFileSync("stop_words.txt", "utf8").split(",");
   }
   is_Not_stop_word(word: string):boolean {
     return (this.stopWords.indexOf(word) == -1 && word.length !=0);
   }
+  info(){
+    console.log(this.constructor.name)
 }
-class WordFrequencyManager {
+}
+class WordFrequencyManager extends Things{
   private freqCount: Record<string, number>;
   constructor() {
+    super();
     this.freqCount = {};
   }
   increment_count(word:string) {
@@ -41,6 +55,9 @@ class WordFrequencyManager {
       return second[1] - first[1];
     });
   }
+  info(){
+    console.log(this.constructor.name)
+}
 }
 class WordFrequencyController{
     wordFrequencyManager:WordFrequencyManager;
