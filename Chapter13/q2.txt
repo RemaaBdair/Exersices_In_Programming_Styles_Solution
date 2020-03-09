@@ -1,0 +1,4 @@
+q2:Mismatch. What happens if the sorted method of WordFrequencyManager is renamed to sorted_freqs, for example? 
+
+This will cause an error as there is no implementation for sort() that exists in the interface.
+We need to provide an implementation to the sort() or rename the sort() or add sorted_freq() as a new function to the interface.
