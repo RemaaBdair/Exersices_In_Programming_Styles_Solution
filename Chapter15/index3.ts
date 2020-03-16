@@ -16,13 +16,11 @@ class EventManager {
   }
   unsubscribe(eventName: string, handler) {
     if (this.subscriptionsList[eventName])
-      for (let i = 0; i < this.subscriptionsList[eventName].length; i++) {
-        if (this.subscriptionsList[eventName][i] == handler)
-          this.subscriptionsList[eventName].splice(i, 1);
-        break;
+    this.subscriptionsList[eventName].filter(h=>handler!==h)
+
       }
   }
-}
+
 class DataStorage {
   data: string;
   eventManager: EventManager;
@@ -44,8 +42,8 @@ class DataStorage {
       .split(" ")
       .forEach(w => this.eventManager.publish("generatedWords", w, false));
     this.eventManager.publish("generatedWords", null, true);
-    this.eventManager.publish("end", null);
     this.eventManager.unsubscribe("beginWork", this.load);
+    this.eventManager.publish("end", null);
     console.log("DataStorag unsubscribed from beginWork");
   };
 }
