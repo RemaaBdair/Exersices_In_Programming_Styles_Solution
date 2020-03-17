@@ -15,7 +15,7 @@ function extractWords(filePath: string): string[] {
 }
 function removeStopWords(data: string[]): string[] {
   let stopWords: string[];
-  if (data.constructor !== Array) return [];
+  if (data.constructor !== Array || data.length===0) return [];
   try {
     stopWords = fs.readFileSync("stop_words.txt", "utf8").split(",");
   } catch (e) {
