@@ -16,10 +16,9 @@ class EventManager {
   }
   unsubscribe(eventName: string, handler) {
     if (this.subscriptionsList[eventName])
-    this.subscriptionsList[eventName].filter(h=>handler!==h)
-
-      }
+      this.subscriptionsList[eventName].filter(h => handler !== h);
   }
+}
 
 class DataStorage {
   data: string;
