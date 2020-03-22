@@ -10,7 +10,7 @@ class TheOne {
       this.value = func(this.value);
     } catch (e) {
       console.error(e);
-      throw e;
+      throw (e);
     }
   }
   printme() {
