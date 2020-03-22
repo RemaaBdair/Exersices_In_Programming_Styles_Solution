@@ -1,8 +1,7 @@
 const fs = require("fs");
-const assert = require("assert");
 function extractWords(filePath: string): string[] {
-  assert(typeof filePath === "string", "Path of the file should be string");
-  assert(filePath, "The path should be a non empty string");
+  if (typeof filePath !== "string" || !filePath)
+    throw new Error("Path of the file should be  a non empty string");
   let data: string;
   try {
     data = fs.readFileSync(filePath, "utf8");
@@ -16,7 +15,7 @@ function extractWords(filePath: string): string[] {
 }
 function removeStopWords(data: string[]): string[] {
   let stopWords: string[];
-  assert(data.constructor === Array, "Data should be an array");
+  if (!Array.isArray(data)) throw new Error("Data should be an array");
   try {
     stopWords = fs.readFileSync("stop_words.txt", "utf8").split(",");
   } catch (e) {
@@ -28,8 +27,8 @@ function removeStopWords(data: string[]): string[] {
 }
 function calculateFreq(data: string[]): Record<string, number> {
   let freqCount: Record<string, number> = {};
-  assert(data.constructor === Array, "Data should be an array");
-  assert(data.length !== 0, "Data should'nt be an empty array");
+  if (!Array.isArray(data)) throw new Error("Data should be an array");
+  if (data.length === 0) throw new Error("Data should'nt be an empty array");
   data.forEach(word => {
     if (freqCount[word]) {
       freqCount[word]++;
@@ -39,9 +38,10 @@ function calculateFreq(data: string[]): Record<string, number> {
   });
   return freqCount;
 }
-function sortArray(data: Record<string, number>):[string,number][] {
-  assert(typeof data === "object", "Data should be an {}");
-  assert(data.length !== 0, "Data shouldn't be an empty Record");
+function sortArray(data: Record<string, number>): [string, number][] {
+  if (data === null || typeof data !== 'object' || Array.isArray(data))
+    throw new Error("Data should be an {}");
+  if (data.length === 0) throw new Error("Data shouldn't be an empty Record");
   return Object.entries(data).sort((a, b) => b[1] - a[1]);
 }
 const compose = (...fns) => fns.reduce((f, g) => args => f(g(args)));
@@ -51,5 +51,6 @@ const freqCount = compose(
   removeStopWords,
   extractWords
 )("input_words.txt");
-assert(freqCount.constructor === Array, "freqCount ahould return an array");
+if (!Array.isArray(freqCount))
+  throw new Error("freqCount ahould return an array");
 for (let i = 0; i < 25; i++) console.log(freqCount[i]);
