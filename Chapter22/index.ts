@@ -1,4 +1,4 @@
-const fs = require("fs");
+ const fs = require("fs");
 const assert = require("assert");
 function extractWords(filePath: string): string[] {
   if (typeof filePath !== "string")
@@ -13,7 +13,7 @@ function extractWords(filePath: string): string[] {
 }
 function removeStopWords(data: string[]): string[] {
   let stopWords: string[];
-  if (data.constructor !== Array) throw new Error("Data should be an array");
+  if (!Array.isArray(data)) throw new Error("Data should be an array");
   stopWords = fs.readFileSync("stop_words.txt", "utf8").split(",");
   return data.filter(word => {
     return stopWords.indexOf(word) == -1 && word.length != 0;
@@ -21,7 +21,7 @@ function removeStopWords(data: string[]): string[] {
 }
 function calculateFreq(data: string[]): Record<string, number> {
   let freqCount: Record<string, number> = {};
-  if (data.constructor !== Array) throw new Error("Data should be an array");
+  if (!Array.isArray(data)) throw new Error("Data should be an array");
   if (data.length === 0) throw new Error("Data should'nt be an empty array");
   data.forEach(word => {
     if (freqCount[word]) {
@@ -33,7 +33,7 @@ function calculateFreq(data: string[]): Record<string, number> {
   return freqCount;
 }
 function sortArray(data: Record<string, number>): [string, number][] {
-  if (typeof data !== "object") throw new Error("Data should be an {}");
+  if (data === null || typeof data !== 'object' || Array.isArray(data)) throw new Error("Data should be an {}");
   if (data.length === 0) throw new Error("Data shouldn't be an empty Record");
   return Object.entries(data).sort((a, b) => b[1] - a[1]);
 }
@@ -45,9 +45,10 @@ try {
     removeStopWords,
     extractWords
   )("input_words.txt");
-  if (freqCount.constructor !== Array)
+  if (!Array.isArray(freqCount))
     throw new Error("freqCount ahould return an array");
   for (let i = 0; i < 25; i++) console.log(freqCount[i]);
 } catch (e) {
   console.error(e);
 }
+ 
