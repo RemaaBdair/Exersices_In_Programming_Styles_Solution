@@ -30,7 +30,7 @@ function extractWords(filePath: string): string[] {
 }
 function removeStopWords(data: string[]): string[] {
   let stopWords: string[];
-  if (Array.isArray(data)) throw new Error("Data should be an array");
+  if (!Array.isArray(data)) throw new Error("Data should be an array");
   stopWords = fs.readFileSync("stop_words.txt", "utf8").split(",");
   return data.filter(word => {
     return stopWords.indexOf(word) == -1 && word.length != 0;
@@ -38,7 +38,7 @@ function removeStopWords(data: string[]): string[] {
 }
 function calculateFreq(data: string[]): Record<string, number> {
   let freqCount: Record<string, number> = {};
-  if (Array.isArray(data)) throw new Error("Data should be an array");
+  if (!Array.isArray(data)) throw new Error("Data should be an array");
   data.forEach(word => {
     if (freqCount[word]) {
       freqCount[word]++;
