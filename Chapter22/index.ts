@@ -22,7 +22,6 @@ function removeStopWords(data: string[]): string[] {
 function calculateFreq(data: string[]): Record<string, number> {
   let freqCount: Record<string, number> = {};
   if (!Array.isArray(data)) throw new Error("Data should be an array");
-  if (data.length === 0) throw new Error("Data should'nt be an empty array");
   data.forEach(word => {
     if (freqCount[word]) {
       freqCount[word]++;
@@ -34,7 +33,6 @@ function calculateFreq(data: string[]): Record<string, number> {
 }
 function sortArray(data: Record<string, number>): [string, number][] {
   if (data === null || typeof data !== 'object' || Array.isArray(data)) throw new Error("Data should be an {}");
-  if (data.length === 0) throw new Error("Data shouldn't be an empty Record");
   return Object.entries(data).sort((a, b) => b[1] - a[1]);
 }
 const compose = (...fns) => fns.reduce((f, g) => args => f(g(args)));
@@ -45,8 +43,6 @@ try {
     removeStopWords,
     extractWords
   )("input_words.txt");
-  if (!Array.isArray(freqCount))
-    throw new Error("freqCount ahould return an array");
   for (let i = 0; i < 25; i++) console.log(freqCount[i]);
 } catch (e) {
   console.error(e);

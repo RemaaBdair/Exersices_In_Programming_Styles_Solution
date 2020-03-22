@@ -38,7 +38,6 @@ function extractWords(filePath: string): string[] {
   function calculateFreq(data: string[]): Record<string, number> {
     let freqCount: Record<string, number> = {};
     assert(data.constructor === Array, "Data should be an array");
-    assert(data.length !== 0, "Data should'nt be an empty array");
     data.forEach(word => {
       if (freqCount[word]) {
         freqCount[word]++;
@@ -50,7 +49,6 @@ function extractWords(filePath: string): string[] {
   }
   function sortArray(data: Record<string, number>): [string, number][] {
     assert(typeof data === "object", "Data should be an {}");
-    assert(data.length !== 0, "Data shouldn't be an empty Record");
     return Object.entries(data).sort((a, b) => b[1] - a[1]);
   }
 let x = new TheOne("input_words.txt");

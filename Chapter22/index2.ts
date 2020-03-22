@@ -21,7 +21,6 @@ const fs = require("fs");
  const calculateFreq=(data: string[]): Record<string, number>=> {
   let freqCount: Record<string, number> = {};
   if(!Array.isArray(data))throw new Error( "Data should be an array");
-  if(data.length === 0)throw new Error( "Data shouldn't be an empty array");
   data.forEach(word => {
     if (freqCount[word]) {
       freqCount[word]++;
@@ -33,7 +32,6 @@ const fs = require("fs");
 }
  function sortArray(data: Record<string, number>): [string, number][] {
   if(data === null || typeof data !== 'object' || Array.isArray(data))throw new Error("Data should be an {}");
-  if(data.length === 0)throw new Error("Data shouldn't be an empty Record");
   return Object.entries(data).sort((a, b) => b[1] - a[1]);
 }
  const compose = (...fns) => fns.reduce((f, g) => args => f(g(args)));
