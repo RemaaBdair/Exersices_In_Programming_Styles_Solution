@@ -7,6 +7,7 @@ function extractWords(filePath: string): string[] {
     data = fs.readFileSync(filePath, "utf8");
   } catch (e) {
     console.error(e);
+    throw(e)
   }
   return data
     .replace(/[^a-zA-Z]/g, " ")
@@ -20,6 +21,7 @@ function removeStopWords(data: string[]): string[] {
     stopWords = fs.readFileSync("stop_words.txt", "utf8").split(",");
   } catch (e) {
     console.error(e);
+    throw(e)
   }
   return data.filter(word => {
     return stopWords.indexOf(word) == -1 && word.length != 0;
