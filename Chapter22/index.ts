@@ -1,4 +1,4 @@
- const fs = require("fs");
+const fs = require("fs");
 const assert = require("assert");
 function extractWords(filePath: string): string[] {
   if (typeof filePath !== "string")
@@ -32,7 +32,8 @@ function calculateFreq(data: string[]): Record<string, number> {
   return freqCount;
 }
 function sortArray(data: Record<string, number>): [string, number][] {
-  if (data === null || typeof data !== 'object' || Array.isArray(data)) throw new Error("Data should be an {}");
+  if (data === null || typeof data !== "object" || Array.isArray(data))
+    throw new Error("Data should be an {}");
   return Object.entries(data).sort((a, b) => b[1] - a[1]);
 }
 const compose = (...fns) => fns.reduce((f, g) => args => f(g(args)));
@@ -47,4 +48,3 @@ try {
 } catch (e) {
   console.error(e);
 }
- 
