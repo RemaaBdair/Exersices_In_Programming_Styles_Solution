@@ -39,7 +39,7 @@ function calculateFreq(data: string[]): Record<string, number> {
   return freqCount;
 }
 function sortArray(data: Record<string, number>) {
-  if (data !== null && typeof data === 'object' && !Array.isArray(data)) return [];
+  if (data === null || typeof data !== 'object' || Array.isArray(data)) return [];
   return Object.entries(data).sort((a, b) => b[1] - a[1]);
 }
 const compose = (...fns) => fns.reduce((f, g) => args => f(g(args)));
