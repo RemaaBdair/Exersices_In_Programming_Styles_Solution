@@ -53,6 +53,4 @@ const freqCount = compose(
   removeStopWords,
   extractWords
 )("input_words.txt");
-if (!Array.isArray(freqCount))
-  throw new Error("freqCount ahould return an array");
 for (let i = 0; i < 25; i++) console.log(freqCount[i]);
