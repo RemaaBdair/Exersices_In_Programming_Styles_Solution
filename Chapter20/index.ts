@@ -15,7 +15,7 @@ function extractWords(filePath: string): string[] {
 }
 function removeStopWords(data: string[]): string[] {
   let stopWords: string[];
-  if (data.constructor !== Array || data.length===0) return [];
+  if (!Array.isArray(data) || data.length===0) return [];
   try {
     stopWords = fs.readFileSync("stop_words.txt", "utf8").split(",");
   } catch (e) {
@@ -28,7 +28,7 @@ function removeStopWords(data: string[]): string[] {
 }
 function calculateFreq(data: string[]): Record<string, number> {
   let freqCount: Record<string, number> = {};
-  if (data.length === 0 || data.constructor !== Array) return {};
+  if (data.length === 0 || !Array.isArray(data)) return {};
   data.forEach(word => {
     if (freqCount[word]) {
       freqCount[word]++;
@@ -39,7 +39,7 @@ function calculateFreq(data: string[]): Record<string, number> {
   return freqCount;
 }
 function sortArray(data: Record<string, number>) {
-  if (data.length === 0 || typeof data !== "object") return [];
+  if (data !== null && typeof data === 'object' && !Array.isArray(data)) return [];
   return Object.entries(data).sort((a, b) => b[1] - a[1]);
 }
 const compose = (...fns) => fns.reduce((f, g) => args => f(g(args)));
