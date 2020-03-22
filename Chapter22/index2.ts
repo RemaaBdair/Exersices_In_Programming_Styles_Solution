@@ -2,7 +2,7 @@
 const fs = require("fs");
  const extractWords=(filePath: string): string[] =>{
   if(typeof filePath !== "string") throw new Error("Path of the file should be string");
-  if(!filePath ||filePath.length===0) throw new Error("The path should be a non empty string");
+  if(!filePath ) throw new Error("The path should be a non empty string");
   let data: string;
   data = fs.readFileSync(filePath, "utf8");
   return data
@@ -35,10 +35,4 @@ const fs = require("fs");
   return Object.entries(data).sort((a, b) => b[1] - a[1]);
 }
  const compose = (...fns) => fns.reduce((f, g) => args => f(g(args)));
- const add=(x,y)=> x+y;
-exports.compose=compose;
-exports.sortArray= sortArray;
-exports.calculateFreq= calculateFreq;
-exports.extractWords= extractWords;
-exports.removeStopWords= removeStopWords;
-exports.add= add;
+module.exports=[compose, extractWords,removeStopWords, calculateFreq, sortArray];
