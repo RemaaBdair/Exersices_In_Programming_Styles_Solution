@@ -1,22 +1,24 @@
 const fs = require("fs");
 class EventManager {
-  subscriptionsList: {};
+  subscriptionsList: Record<string,((arg: string,flag?:boolean) => void)[]>;
   constructor() {
     this.subscriptionsList = {};
   }
-  subscribe(eventName: string, handler) {
+  subscribe(eventName: string, handler:((arg: string) => void)) {
     if (!this.subscriptionsList[eventName])
       this.subscriptionsList[eventName] = [handler];
     else this.subscriptionsList[eventName].push(handler);
   }
-  publish(eventName: string, arg, flag?: boolean) {
+  publish(eventName: string, arg:string, flag?: boolean) {
     if (this.subscriptionsList[eventName]) {
       for (let handler of this.subscriptionsList[eventName]) handler(arg, flag);
     }
   }
-  unsubscribe(eventName: string, handler) {
+  unsubscribe(eventName: string, handler:((arg: string) => void)) {
     if (this.subscriptionsList[eventName])
-    this.subscriptionsList[eventName]=this.subscriptionsList[eventName].filter(h => handler !== h);
+      this.subscriptionsList[eventName] = this.subscriptionsList[
+        eventName
+      ].filter(h => handler !== h);
   }
 }
 
@@ -40,7 +42,7 @@ class DataStorage {
     this.data
       .split(" ")
       .forEach(w => this.eventManager.publish("generatedWords", w, false));
-    this.eventManager.publish("generatedWords", null, true);//to know this is the end of the words
+    this.eventManager.publish("generatedWords", null, true); //to know this is the end of the words
     this.eventManager.unsubscribe("beginWork", this.load);
     this.eventManager.publish("end", null);
     console.log("DataStorag unsubscribed from beginWork");

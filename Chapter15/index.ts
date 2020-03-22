@@ -1,15 +1,15 @@
 const fs = require("fs");
 class EventManager {
-  subscriptionsList: {};
+  subscriptionsList: Record<string,((arg: string) => void)[]>;
   constructor() {
     this.subscriptionsList = {};
   }
-  subscribe(eventName: string, handler) {
+  subscribe(eventName: string, handler:((arg: string) => void)) {
     if (!this.subscriptionsList[eventName])
       this.subscriptionsList[eventName] = [handler];
     else this.subscriptionsList[eventName].push(handler);
   }
-  publish(eventName: string, arg) {
+  publish(eventName: string, arg:string) {
     if (this.subscriptionsList[eventName]) {
       for (let handler of this.subscriptionsList[eventName]) handler(arg);
     }
